@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d5c95eeed72bcf4e915c49c6267a0a7, type: 3}
+  m_Name: BlueUnitConfig
+  m_EditorClassIdentifier: Assembly-CSharp::Game.UnitConfig
+  <Id>k__BackingField: unit_blue
+  <Health>k__BackingField: 100
+  <Damage>k__BackingField: 10
+  <Speed>k__BackingField: 5
+  <FireRate>k__BackingField: 2
+  <Prefab>k__BackingField: {fileID: 6092332490530368188, guid: 3f528cf367e1ebf4a94be8f0ef58a001, type: 3}
