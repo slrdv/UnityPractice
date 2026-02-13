@@ -17,6 +17,8 @@ namespace Game
 
         protected override void Configure(IContainerBuilder builder)
         {
+            builder.Register<UnitRegistry>(Lifetime.Singleton).As<IUnitRegistry>();
+
             builder.Register(r => new LevelBoundsService(_levelBounds), Lifetime.Singleton).As<ILevelBoundsService>();
             builder.Register<UnitFactory>(Lifetime.Singleton).AsSelf();
             builder.Register(r => new UnitSpawner(r.Resolve<UnitFactory>(), r.Resolve<IRepository<string, UnitConfig>>(), _gameConfig.DefaultPlayerUnitId, _playerSpot, _enemySpot), Lifetime.Singleton);

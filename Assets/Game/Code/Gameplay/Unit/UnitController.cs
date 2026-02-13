@@ -8,14 +8,19 @@ namespace Game
         private readonly UnitModel _model;
         private readonly UnitView _view;
         private readonly UnitHealthSystem _healthSystem;
+        private readonly IUnitAimSystem _aimSystem;
         private readonly UnitWeaponSystem _weaponSystem;
         private readonly IUnitMovementSystem _movementSystem;
 
-        public UnitController(UnitModel model, UnitView view, UnitHealthSystem healthSystem, UnitWeaponSystem weaponSystem, IUnitMovementSystem movementSystem)
+        public UnitView View => _view;
+        public UnitModel Model => _model;
+
+        public UnitController(UnitModel model, UnitView view, UnitHealthSystem healthSystem, IUnitAimSystem aimSystem, UnitWeaponSystem weaponSystem, IUnitMovementSystem movementSystem)
         {
             _model = model;
             _view = view;
             _healthSystem = healthSystem;
+            _aimSystem = aimSystem;
             _weaponSystem = weaponSystem;
             _movementSystem = movementSystem;
 
@@ -29,9 +34,8 @@ namespace Game
 
         public void Tick(float delta)
         {
-            Vector3 velocity = _movementSystem.CalculateMovement(delta, _model.Position, _model.Direction, _model.Speed);
-            _model.ApplyVelocity(velocity);
-            _view.SetPosition(_model.Position);
+            ApplyVelocity(_movementSystem.CalculateMovement(delta, _model.Position, _model.Direction, _model.Speed));
+            ApplyRotation(_aimSystem.CalculateRotation(_model.Position));
 
             _weaponSystem.Tick(delta);
         }
@@ -42,6 +46,20 @@ namespace Game
             _weaponSystem.FireEvent -= OnFire;
 
             _model.HealthChangedEvent -= HealthChanged;
+
+            _aimSystem.Dispose();
+        }
+
+        private void ApplyVelocity(Vector3 velocity)
+        {
+            _model.ApplyVelocity(velocity);
+            _view.SetPosition(_model.Position);
+        }
+
+        private void ApplyRotation(Vector3 rotation)
+        {
+            _model.SetRotation(rotation);
+            _view.SetRotation(rotation);
         }
 
         private void OnFire()

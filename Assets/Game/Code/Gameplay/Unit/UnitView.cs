@@ -19,6 +19,14 @@ namespace Game
             transform.position = position;
         }
 
+        public void SetRotation(Vector3 rotation)
+        {
+            if (rotation == Vector3.zero) return;
+
+            Quaternion targetRotation = Quaternion.LookRotation(rotation);
+            transform.rotation = targetRotation;
+        }
+
         public void Fire(int damage)
         {
             _weaponComponent.Fire(damage);

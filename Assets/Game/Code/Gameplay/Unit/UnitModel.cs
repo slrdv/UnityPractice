@@ -12,6 +12,7 @@ namespace Game
         private int _health;
         private Vector3 _position;
         private Vector3 _direction;
+        private Vector3 _rotation;
         private float _speed;
         private float _fireRate;
 
@@ -20,6 +21,7 @@ namespace Game
         public int Health => _health;
         public Vector3 Position => _position;
         public Vector3 Direction => _direction;
+        public Vector3 Rotation => _rotation;
         public float Speed => _speed;
         public float FireRate => _fireRate;
 
@@ -62,6 +64,11 @@ namespace Game
         {
             _position += velocity;
             _direction = velocity.normalized;
+        }
+
+        public void SetRotation(Vector3 rotation)
+        {
+            _rotation = rotation;
         }
     }
 }

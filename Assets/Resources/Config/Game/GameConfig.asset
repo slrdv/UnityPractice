@@ -13,3 +13,6 @@ MonoBehaviour:
   m_Name: GameConfig
   m_EditorClassIdentifier: Assembly-CSharp::Game.GameConfig
   <DefaultPlayerUnitId>k__BackingField: unit_white
+  <GroundLayer>k__BackingField:
+    serializedVersion: 2
+    m_Bits: 16
