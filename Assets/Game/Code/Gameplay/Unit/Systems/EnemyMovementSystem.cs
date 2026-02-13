@@ -1,19 +1,27 @@
-using System;
 using UnityEngine;
 
 namespace Game
 {
     public sealed class EnemyMovementSystem : IUnitMovementSystem
     {
-        public event Action<Vector3> MoveEvent;
+        private readonly ILevelBoundsService _boundsService;
 
-        public void SetSpeed(float speed)
+        public EnemyMovementSystem(ILevelBoundsService boundsService)
         {
-
+            _boundsService = boundsService;
         }
-        public void Tick(float delta)
-        {
 
+        public Vector3 CalculateMovement(float deltaTime, Vector3 position, Vector3 direction, float speed)
+        {
+            Vector3 velocity = direction * speed * deltaTime;
+
+            Vector3 nextPosition = position + velocity;
+            if (_boundsService.IsOutOfBounds(nextPosition))
+            {
+                velocity = _boundsService.GetReflection(nextPosition, velocity);
+            }
+
+            return velocity;
         }
     }
 }

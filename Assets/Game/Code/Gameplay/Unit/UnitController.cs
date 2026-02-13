@@ -24,15 +24,15 @@ namespace Game
             weaponSystem.SetFireRate(model.FireRate);
             weaponSystem.FireEvent += OnFire;
 
-            movementSystem.SetSpeed(model.Speed);
-            movementSystem.MoveEvent += OnMove;
-
             model.HealthChangedEvent += HealthChanged;
         }
 
         public void Tick(float delta)
         {
-            _movementSystem.Tick(delta);
+            Vector3 velocity = _movementSystem.CalculateMovement(delta, _model.Position, _model.Direction, _model.Speed);
+            _model.ApplyVelocity(velocity);
+            _view.SetPosition(_model.Position);
+
             _weaponSystem.Tick(delta);
         }
 
@@ -40,7 +40,6 @@ namespace Game
         {
             _healthSystem.ApplyDamgeEvent -= OnApplyDamage;
             _weaponSystem.FireEvent -= OnFire;
-            _movementSystem.MoveEvent -= OnMove;
 
             _model.HealthChangedEvent -= HealthChanged;
         }
@@ -54,13 +53,6 @@ namespace Game
         {
             _model.ApplyDamage(damage);
         }
-
-        private void OnMove(Vector3 position)
-        {
-            _model.SetPosition(position);
-            _view.SetPosition(position);
-        }
-
 
         private void HealthChanged(int health)
         {

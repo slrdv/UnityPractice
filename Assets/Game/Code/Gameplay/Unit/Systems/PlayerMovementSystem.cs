@@ -1,26 +1,21 @@
-using System;
 using UnityEngine;
 
 namespace Game
 {
     public sealed class PlayerMovementSystem : IUnitMovementSystem
     {
-        public event Action<Vector3> MoveEvent;
-
         private readonly IInputProvider _inputProvider;
-
-        private float _speed;
 
         public PlayerMovementSystem(IInputProvider inputProvider)
         {
             _inputProvider = inputProvider;
         }
 
-        public void SetSpeed(float speed)
+        public Vector3 CalculateMovement(float delta, Vector3 position, Vector3 direction, float speed)
         {
-            _speed = speed;
-        }
+            Vector2 inputVector = _inputProvider.GetMovementInput().normalized;
 
-        public void Tick(float delta) => throw new NotImplementedException();
+            return new Vector3(inputVector.x, 0, inputVector.y) * speed * delta;
+        }
     }
 }

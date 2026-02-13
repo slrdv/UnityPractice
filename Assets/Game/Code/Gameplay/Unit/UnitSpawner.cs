@@ -23,15 +23,15 @@ namespace Game
         public UnitController SpawnDefaultPlayer()
         {
             UnitConfig config = _unitRepository.Get(_defaultPlayerId);
-            UnitModel model = new UnitModel(config.Id, config.Damage, config.Health, _playerSpot.position, config.Speed, config.FireRate);
+            UnitModel model = new UnitModel(config.Id, config.Damage, config.Health, _playerSpot.position, Vector3.zero, config.Speed, config.FireRate);
+
             return _factory.CreatePlayer(model, config.Prefab, _playerSpot);
         }
 
         public UnitController SpawnRandomEnemy()
         {
-            UnitConfig[] configs = _unitRepository.GetAll().ToArray();
-            UnitConfig config = configs[Random.Range(0, configs.Length)];
-            UnitModel model = new UnitModel(config.Id, config.Damage, config.Health, _enemySpot.position, config.Speed, config.FireRate);
+            UnitConfig config = RandomUtils.GetRandomElement(_unitRepository.GetAll().ToArray());
+            UnitModel model = new UnitModel(config.Id, config.Damage, config.Health, _enemySpot.position, RandomUtils.GetRandomDirectionInCircle(), config.Speed, config.FireRate);
 
             return _factory.CreateEnemy(model, config.Prefab, _enemySpot);
         }

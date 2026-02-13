@@ -1,13 +1,9 @@
-using System;
 using UnityEngine;
 
 namespace Game
 {
     public interface IUnitMovementSystem
     {
-        event Action<Vector3> MoveEvent;
-
-        void SetSpeed(float speed);
-        void Tick(float delta);
+        Vector3 CalculateMovement(float deltaTime, Vector3 position, Vector3 direction, float speed);
     }
 }

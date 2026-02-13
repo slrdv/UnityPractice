@@ -12,11 +12,13 @@ namespace Game
     {
         private readonly IObjectResolver _resolver;
         private readonly IInputProvider _inputProvider;
+        private readonly ILevelBoundsService _boundsService;
 
-        public UnitFactory(IObjectResolver resolver, IInputProvider inputProvider)
+        public UnitFactory(IObjectResolver resolver, IInputProvider inputProvider, ILevelBoundsService boundsService)
         {
             _resolver = resolver;
             _inputProvider = inputProvider;
+            _boundsService = boundsService;
         }
 
         public UnitController CreatePlayer(UnitModel model, UnitView prefab, Transform root)
@@ -27,7 +29,7 @@ namespace Game
 
         public UnitController CreateEnemy(UnitModel model, UnitView prefab, Transform root)
         {
-            IUnitMovementSystem movementSystem = new EnemyMovementSystem();
+            IUnitMovementSystem movementSystem = new EnemyMovementSystem(_boundsService);
             return Create(model, prefab, root, movementSystem);
         }
 
