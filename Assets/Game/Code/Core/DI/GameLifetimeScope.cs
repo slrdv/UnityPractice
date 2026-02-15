@@ -17,6 +17,9 @@ namespace Game
         [SerializeField]
         private Transform _projectileRoot;
 
+        [SerializeField]
+        private HUDView _hudView;
+
         protected override void Configure(IContainerBuilder builder)
         {
             builder.Register<UnitRegistry>(Lifetime.Singleton).As<IUnitRegistry>();
@@ -32,6 +35,8 @@ namespace Game
             builder.Register(r => new GameObjectPool<ProjectileView>(r, _gameConfig.ProjectilePrefab, _projectileRoot), Lifetime.Singleton);
             builder.Register<ProjectileFactory>(Lifetime.Singleton).AsSelf();
             builder.Register<ProjectileManager>(Lifetime.Singleton).As<IProjectileManager>();
+
+            builder.Register(r => new HudController(_hudView, r.Resolve<IUnitRegistry>()), Lifetime.Singleton).AsSelf();
 
             builder.RegisterEntryPoint<GameScopeInitializer>(Lifetime.Singleton);
         }

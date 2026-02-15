@@ -19,7 +19,7 @@ namespace Game
         public bool ProcessFire(float delta)
         {
             _fireTimeCounter += delta;
-            if (_fireTimeCounter >= _fireRate)
+            if (_fireTimeCounter >= 1 / _fireRate)
             {
                 _fireTimeCounter = 0f;
                 return _registry.Player != null;
