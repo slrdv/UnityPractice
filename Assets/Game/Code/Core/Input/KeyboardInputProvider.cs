@@ -5,7 +5,7 @@ namespace Game
     public sealed class KeyboardInputProvider : IInputProvider
     {
 
-        public bool GetAttackInput()
+        public bool GetFireButtonPressed()
         {
             return GetAimInput() != Vector3.zero;
         }

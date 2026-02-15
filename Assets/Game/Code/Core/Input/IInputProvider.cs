@@ -4,7 +4,7 @@ namespace Game
 {
     public interface IInputProvider
     {
-        bool GetAttackInput();
+        bool GetFireButtonPressed();
         Vector3 GetAimInput();
         Vector2 GetMovementInput();
     }

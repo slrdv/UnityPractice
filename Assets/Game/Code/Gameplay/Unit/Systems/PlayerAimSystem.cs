@@ -11,12 +11,10 @@ namespace Game
             _inputProvider = inputProvider;
         }
 
-        public Vector3 CalculateRotation(Vector3 position)
+        public Vector3 CalculateFaceDirection(Vector3 position)
         {
             Vector2 targetVector = _inputProvider.GetAimInput();
             return new Vector3(targetVector.x, 0, targetVector.y).normalized;
         }
-
-        public void Dispose() { }
     }
 }

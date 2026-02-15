@@ -1,9 +1,8 @@
-using System;
 using UnityEngine;
 namespace Game
 {
-    public interface IUnitAimSystem : IDisposable
+    public interface IUnitAimSystem
     {
-        Vector3 CalculateRotation(Vector3 position);
+        Vector3 CalculateFaceDirection(Vector3 position);
     }
 }

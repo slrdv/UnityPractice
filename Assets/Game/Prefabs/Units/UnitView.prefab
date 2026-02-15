@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3729846899173621761}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: WeaponSpot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,9 +41,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2908610167313311519}
   - component: {fileID: 147187181319630119}
-  - component: {fileID: 9092772050029530243}
   - component: {fileID: 6092332490530368188}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: UnitView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -79,18 +78,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53e19d7edf6c2a94ca23882c7d82fdee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.UnitDamageComponent
---- !u!114 &9092772050029530243
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4944046597358094992}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc276747e7421c946b88b41909c60277, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Game.UnitWeaponComponent
 --- !u!114 &6092332490530368188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -103,6 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2b6d0c3c720bed4dbde48a28fecea58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.UnitView
+  _firePoint: {fileID: 3729846899173621761}
 --- !u!1 &5058604620674339525
 GameObject:
   m_ObjectHideFlags: 0
@@ -115,7 +103,7 @@ GameObject:
   - component: {fileID: 5219076404717856292}
   - component: {fileID: 2142986083787796680}
   - component: {fileID: 2098354808523631253}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -228,7 +216,7 @@ GameObject:
   - component: {fileID: 44559753743357395}
   - component: {fileID: 6982504271797563008}
   - component: {fileID: 1855049385946489663}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3d5c95eeed72bcf4e915c49c6267a0a7, type: 3}
-  m_Name: RedUnitConfig
+  m_Name: SpikeUnitConfig
   m_EditorClassIdentifier: Assembly-CSharp::Game.UnitConfig
-  <Id>k__BackingField: unit_red
+  <Id>k__BackingField: unit_spike
   <Health>k__BackingField: 100
   <Damage>k__BackingField: 10
   <Speed>k__BackingField: 5
   <FireRate>k__BackingField: 2
+  <ProjectileSpeed>k__BackingField: 10
   <Prefab>k__BackingField: {fileID: 6092332490530368188, guid: 3f528cf367e1ebf4a94be8f0ef58a001, type: 3}

@@ -3,15 +3,16 @@ using UnityEngine;
 namespace Game
 {
     [RequireComponent(typeof(UnitDamageComponent))]
-    [RequireComponent(typeof(UnitWeaponComponent))]
     public sealed class UnitView : MonoBehaviour
     {
-        private UnitDamageComponent _damageComponent;
-        private UnitWeaponComponent _weaponComponent;
+        [SerializeField]
+        private Transform _firePoint;
 
-        public void Intitialze(IDamageReciever damageReciever)
+        private UnitDamageComponent _damageComponent;
+
+        public void Intitialze(IDamageReciever damageReciever, string teamId)
         {
-            _damageComponent.SetDamageReciever(damageReciever);
+            _damageComponent.Initialize(damageReciever, teamId);
         }
 
         public void SetPosition(Vector3 position)
@@ -19,23 +20,19 @@ namespace Game
             transform.position = position;
         }
 
-        public void SetRotation(Vector3 rotation)
+        public void LookAt(Vector3 direction)
         {
-            if (rotation == Vector3.zero) return;
-
-            Quaternion targetRotation = Quaternion.LookRotation(rotation);
-            transform.rotation = targetRotation;
+            transform.forward = direction;
         }
 
-        public void Fire(int damage)
+        public Vector3 GetFirePoint()
         {
-            _weaponComponent.Fire(damage);
+            return _firePoint.position;
         }
 
         private void Awake()
         {
             _damageComponent = GetComponent<UnitDamageComponent>();
-            _weaponComponent = GetComponent<UnitWeaponComponent>();
         }
     }
 }

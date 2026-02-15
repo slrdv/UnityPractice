@@ -6,40 +6,24 @@ namespace Game
     {
         private readonly IUnitRegistry _unitRegistry;
 
-        private Transform _target;
-
         public EnemyAimSystem(IUnitRegistry unitRegistry)
         {
             _unitRegistry = unitRegistry;
-
-            _unitRegistry.PlayerRegisteredEvent += OnPlayerRegistered;
-            _unitRegistry.PlayerUnregisteredEvent += OnPlayerUnregistered;
         }
 
-        public Vector3 CalculateRotation(Vector3 position)
+        public Vector3 CalculateFaceDirection(Vector3 position)
         {
-            if (_target == null) return Vector3.zero;
+            Transform target = GetTarget();
+            if (target == null) return Vector3.zero;
 
-            Vector3 targetVector = _target.position - position;
+            Vector3 targetVector = target.position - position;
             targetVector.y = 0f;
             return targetVector.normalized;
         }
 
-        public void Dispose()
+        private Transform GetTarget()
         {
-            _unitRegistry.PlayerRegisteredEvent -= OnPlayerRegistered;
-            _unitRegistry.PlayerUnregisteredEvent -= OnPlayerUnregistered;
+            return _unitRegistry.Player?.View.transform;
         }
-
-        private void OnPlayerRegistered(UnitController target)
-        {
-            _target = target.View.transform;
-        }
-
-        private void OnPlayerUnregistered()
-        {
-            _target = null;
-        }
-
     }
 }

@@ -6,14 +6,21 @@ namespace Game
     {
         private readonly ILevelBoundsService _boundsService;
 
+        private float _speed;
+
         public EnemyMovementSystem(ILevelBoundsService boundsService)
         {
             _boundsService = boundsService;
         }
 
-        public Vector3 CalculateMovement(float deltaTime, Vector3 position, Vector3 direction, float speed)
+        public void SetSpeed(float speed)
         {
-            Vector3 velocity = direction * speed * deltaTime;
+            _speed = speed;
+        }
+
+        public Vector3 CalculateMovement(float deltaTime, Vector3 position, Vector3 direction)
+        {
+            Vector3 velocity = direction * _speed * deltaTime;
 
             Vector3 nextPosition = position + velocity;
             if (_boundsService.IsOutOfBounds(nextPosition))

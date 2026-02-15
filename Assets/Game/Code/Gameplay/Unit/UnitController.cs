@@ -9,13 +9,15 @@ namespace Game
         private readonly UnitView _view;
         private readonly UnitHealthSystem _healthSystem;
         private readonly IUnitAimSystem _aimSystem;
-        private readonly UnitWeaponSystem _weaponSystem;
+        private readonly IUnitWeaponSystem _weaponSystem;
         private readonly IUnitMovementSystem _movementSystem;
+        private readonly TeamConfig _teamConfig;
+        private readonly IProjectileManager _fireManager;
 
         public UnitView View => _view;
         public UnitModel Model => _model;
 
-        public UnitController(UnitModel model, UnitView view, UnitHealthSystem healthSystem, IUnitAimSystem aimSystem, UnitWeaponSystem weaponSystem, IUnitMovementSystem movementSystem)
+        public UnitController(UnitModel model, UnitView view, UnitHealthSystem healthSystem, IUnitAimSystem aimSystem, IUnitWeaponSystem weaponSystem, IUnitMovementSystem movementSystem, TeamConfig teamConfig, IProjectileManager fireManager)
         {
             _model = model;
             _view = view;
@@ -23,31 +25,31 @@ namespace Game
             _aimSystem = aimSystem;
             _weaponSystem = weaponSystem;
             _movementSystem = movementSystem;
+            _teamConfig = teamConfig;
+            _fireManager = fireManager;
 
             healthSystem.ApplyDamgeEvent += OnApplyDamage;
 
+            _movementSystem.SetSpeed(model.Speed);
             weaponSystem.SetFireRate(model.FireRate);
-            weaponSystem.FireEvent += OnFire;
 
             model.HealthChangedEvent += HealthChanged;
+
+            ApplyFaceDirection(model.FaceDirection);
+            _view.SetPosition(model.Position);
         }
 
         public void Tick(float delta)
         {
-            ApplyVelocity(_movementSystem.CalculateMovement(delta, _model.Position, _model.Direction, _model.Speed));
-            ApplyRotation(_aimSystem.CalculateRotation(_model.Position));
-
-            _weaponSystem.Tick(delta);
+            ApplyVelocity(_movementSystem.CalculateMovement(delta, _model.Position, _model.VelocityDirection));
+            ApplyFaceDirection(_aimSystem.CalculateFaceDirection(_model.Position));
+            ProcessFire(delta);
         }
 
         public void Dispose()
         {
             _healthSystem.ApplyDamgeEvent -= OnApplyDamage;
-            _weaponSystem.FireEvent -= OnFire;
-
             _model.HealthChangedEvent -= HealthChanged;
-
-            _aimSystem.Dispose();
         }
 
         private void ApplyVelocity(Vector3 velocity)
@@ -56,15 +58,20 @@ namespace Game
             _view.SetPosition(_model.Position);
         }
 
-        private void ApplyRotation(Vector3 rotation)
+        private void ApplyFaceDirection(Vector3 direction)
         {
-            _model.SetRotation(rotation);
-            _view.SetRotation(rotation);
+            if (direction.sqrMagnitude < MathConstants.EPSILON) return;
+
+            _model.SetFaceDirection(direction);
+            _view.LookAt(direction);
         }
 
-        private void OnFire()
+        private void ProcessFire(float deltaTime)
         {
-            _view.Fire(_model.Damage);
+            if (_weaponSystem.ProcessFire(deltaTime))
+            {
+                _fireManager.Fire(_model.Damage, _model.ProjectileSpeed, _teamConfig.TeamId, _teamConfig.TeamColor, _view.GetFirePoint(), _model.GetFaceDirection());
+            }
         }
 
         private void OnApplyDamage(int damage)

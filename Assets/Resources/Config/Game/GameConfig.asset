@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3963db4c74471c74f81ebb3dc1f9c41d, type: 3}
   m_Name: GameConfig
   m_EditorClassIdentifier: Assembly-CSharp::Game.GameConfig
-  <DefaultPlayerUnitId>k__BackingField: unit_white
-  <GroundLayer>k__BackingField:
-    serializedVersion: 2
-    m_Bits: 16
+  <DefaultPlayerUnitId>k__BackingField: unit_spike
+  <PlayerTeamConfig>k__BackingField: {fileID: 11400000, guid: 54fb4fd9dcba1874f9cbe79b5d167bef, type: 2}
+  <EnemyTeamConfig>k__BackingField: {fileID: 11400000, guid: ae9caa60e6c18124d96988fd916ceaf4, type: 2}
+  <ProjectilePrefab>k__BackingField: {fileID: 522031663599914735, guid: d33c262017d64824f8a2b9c35fc7663b, type: 3}
