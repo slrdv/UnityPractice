@@ -7,6 +7,7 @@ namespace Game
         public event Action SaveEvent;
         public event Action ResetEvent;
         public event Action DeleteEvent;
+        public event Action PauseEvent;
 
         public void Reset()
         {
@@ -21,6 +22,11 @@ namespace Game
         public void Delete()
         {
             DeleteEvent?.Invoke();
+        }
+
+        public void Pause()
+        {
+            PauseEvent?.Invoke();
         }
     }
 }

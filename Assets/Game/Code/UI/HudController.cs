@@ -25,6 +25,7 @@ namespace Game
             _hudView.SaveButtonPressed += OnSavePressed;
             _hudView.ResetButtonPressed += OnResetPressed;
             _hudView.DeleteButtonPressed += OnDeleteSavePressed;
+            _hudView.PauseButtonPressed += OnPausePressed;
         }
 
         public void Dispose()
@@ -37,6 +38,7 @@ namespace Game
             _hudView.SaveButtonPressed -= OnSavePressed;
             _hudView.ResetButtonPressed -= OnResetPressed;
             _hudView.DeleteButtonPressed -= OnDeleteSavePressed;
+            _hudView.PauseButtonPressed -= OnPausePressed;
 
             _playerStatsController?.Dispose();
             _enemyStatsController?.Dispose();
@@ -68,6 +70,11 @@ namespace Game
         private void OnDeleteSavePressed()
         {
             _inputContext.Delete();
+        }
+
+        private void OnPausePressed()
+        {
+            _inputContext.Pause();
         }
 
         private void OnPlayerRegistered(UnitController player)

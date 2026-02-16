@@ -21,6 +21,7 @@ namespace Game
             inputContext.SaveEvent += OnSave;
             inputContext.ResetEvent += OnReset;
             inputContext.DeleteEvent += OnDelete;
+            inputContext.PauseEvent += OnPause;
         }
 
         public void InitSession()
@@ -46,6 +47,7 @@ namespace Game
             _inputContext.SaveEvent -= OnSave;
             _inputContext.ResetEvent -= OnReset;
             _inputContext.DeleteEvent -= OnDelete;
+            _inputContext.PauseEvent -= OnPause;
         }
 
         private void OnSave()
@@ -61,6 +63,18 @@ namespace Game
         private void OnDelete()
         {
             _saveManager.DeleteSaveData();
+        }
+
+        private void OnPause()
+        {
+            if (_gameTickService.IsPaused)
+            {
+                _gameTickService.StartTick();
+            }
+            else
+            {
+                _gameTickService.StopTick();
+            }
         }
     }
 }

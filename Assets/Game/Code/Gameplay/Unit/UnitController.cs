@@ -37,6 +37,7 @@ namespace Game
 
             ApplyFaceDirection(model.FaceDirection);
             _view.SetPosition(model.Position);
+            _view.SetColor(teamConfig.TeamColor);
         }
 
         public void Tick(float delta)

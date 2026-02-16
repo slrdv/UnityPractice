@@ -11,6 +11,8 @@ namespace Game
 
         private bool _paused = true;
 
+        public bool IsPaused => _paused;
+
         public void Register(IGameTickListener tickable)
         {
             if (tickable is IGameTickable t) _tickables.Add(t);

@@ -17,6 +17,7 @@ namespace Game
             _model = model;
             _view = view;
 
+            _view.SetColor(model.Color);
             _view.HitEvent += OnHit;
         }
 

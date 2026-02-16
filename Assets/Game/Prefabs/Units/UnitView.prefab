@@ -91,6 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.UnitView
   _firePoint: {fileID: 3729846899173621761}
+  _renderer: {fileID: 2142986083787796680}
 --- !u!1 &5058604620674339525
 GameObject:
   m_ObjectHideFlags: 0

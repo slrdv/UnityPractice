@@ -9,14 +9,12 @@ namespace Game
 
         [SerializeField]
         private CollisionComponent _collisionComponent;
+        [SerializeField]
+        private Renderer _renderer;
 
         public void SetColor(Color color)
         {
-            Renderer renderer = GetComponent<Renderer>();
-            if (renderer != null)
-            {
-                renderer.material.color = color;
-            }
+            _renderer.material.color = color;
         }
 
         public void SetPosition(Vector3 position)

@@ -7,6 +7,8 @@ namespace Game
     {
         [SerializeField]
         private Transform _firePoint;
+        [SerializeField]
+        private Renderer _renderer;
 
         private UnitDamageComponent _damageComponent;
 
@@ -28,6 +30,11 @@ namespace Game
         public Vector3 GetFirePoint()
         {
             return _firePoint.position;
+        }
+
+        public void SetColor(Color color)
+        {
+            _renderer.material.color = color;
         }
 
         public void DestroyView()

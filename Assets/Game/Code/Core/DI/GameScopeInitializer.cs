@@ -8,7 +8,6 @@ namespace Game
         private readonly IRepository<string, UnitConfig> _unitRepository;
         private readonly GameObjectPool<ProjectileView> _projectilePool;
         private readonly IGameSaveManager _saveManager;
-
         private readonly IGameSessionManager _sessionManager;
         private readonly HudController _hudManager;
 
@@ -17,7 +16,6 @@ namespace Game
             GameObjectPool<ProjectileView> projectilePool,
             IGameSaveManager saveManager,
             IGameSessionManager sessionManager,
-            GameTickService gameTickService,
             HudController hudManager)
         {
             _unitRepository = unitRepository;

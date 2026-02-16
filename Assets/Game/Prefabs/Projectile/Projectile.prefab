@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.ProjectileView
   _collisionComponent: {fileID: 8195974361959892000}
+  _renderer: {fileID: 7624595995279172003}
 --- !u!1 &3138840810657904663
 GameObject:
   m_ObjectHideFlags: 0
