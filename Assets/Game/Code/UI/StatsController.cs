@@ -21,7 +21,10 @@ namespace Game
         {
             _model.HealthChangedEvent -= OnHealthChanged;
             _model = null;
-            _statsPanelView.Hide();
+            if (_statsPanelView != null)
+            {
+                _statsPanelView.Hide();
+            }
         }
 
         private void OnHealthChanged(int health)

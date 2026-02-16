@@ -22,6 +22,9 @@ namespace Game
 
         protected override void Configure(IContainerBuilder builder)
         {
+            builder.Register<GameSaveManager>(Lifetime.Singleton).As<IGameSaveManager>();
+            builder.Register<LocalGameSaveRepository>(Lifetime.Singleton).As<IGameSaveRepository>();
+
             builder.Register<UnitRegistry>(Lifetime.Singleton).As<IUnitRegistry>();
             builder.Register<ProjectileRegistry>(Lifetime.Singleton).As<IProjectileRegistry>();
 
@@ -30,13 +33,14 @@ namespace Game
             builder.Register(r => new UnitSpawner(r.Resolve<UnitFactory>(), r.Resolve<IRepository<string, UnitConfig>>(), _gameConfig, _playerSpot, _enemySpot), Lifetime.Singleton);
 
             builder.Register<UnitManager>(Lifetime.Singleton).As<IUnitManager>();
-            builder.Register<GameManager>(Lifetime.Singleton).As<IGameManager>();
+            builder.Register<GameSessionManager>(Lifetime.Singleton).As<IGameSessionManager>();
 
             builder.Register(r => new GameObjectPool<ProjectileView>(r, _gameConfig.ProjectilePrefab, _projectileRoot), Lifetime.Singleton);
             builder.Register<ProjectileFactory>(Lifetime.Singleton).AsSelf();
             builder.Register<ProjectileManager>(Lifetime.Singleton).As<IProjectileManager>();
 
-            builder.Register(r => new HudController(_hudView, r.Resolve<IUnitRegistry>()), Lifetime.Singleton).AsSelf();
+            builder.Register<UIInputContext>(Lifetime.Singleton).As<IUIInputContext>();
+            builder.Register(r => new HudController(_hudView, r.Resolve<IUnitRegistry>(), r.Resolve<IUIInputContext>()), Lifetime.Singleton).AsSelf();
 
             builder.RegisterEntryPoint<GameScopeInitializer>(Lifetime.Singleton);
         }

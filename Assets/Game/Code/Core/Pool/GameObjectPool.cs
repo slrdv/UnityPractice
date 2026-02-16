@@ -27,13 +27,15 @@ namespace Game
         public T Get()
         {
             T obj = _pool.Count > 0 ? _pool.Pop() : Create();
-            obj.SetActive(true);
+            obj.OnTakenFromPool();
             return obj;
         }
 
         public void Release(T obj)
         {
-            obj.SetActive(false);
+            obj.OnReleasedToPool();
+            obj.transform.SetParent(_container);
+            obj.transform.position = _container.position;
 
             if (_pool.Count >= _maxPoolSize)
             {
@@ -47,23 +49,17 @@ namespace Game
         public void Prewarm(int amount)
         {
             amount = Mathf.Min(amount, _maxPoolSize - _pool.Count);
-            List<T> prewarm = new List<T>(amount);
-
             for (int i = 0; i < amount; ++i)
             {
-                prewarm.Add(Get());
-            }
-
-            for (int i = 0; i < amount; ++i)
-            {
-                Release(prewarm[i]);
+                T obj = Create();
+                obj.OnTakenFromPool();
+                Release(obj);
             }
         }
 
         private T Create()
         {
             T obj = _objectResolver.Instantiate(_prefab, _container);
-            obj.SetActive(false);
             obj.SetPool(this);
             return obj;
         }

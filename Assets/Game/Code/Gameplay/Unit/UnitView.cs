@@ -30,6 +30,11 @@ namespace Game
             return _firePoint.position;
         }
 
+        public void DestroyView()
+        {
+            Destroy(gameObject);
+        }
+
         private void Awake()
         {
             _damageComponent = GetComponent<UnitDamageComponent>();

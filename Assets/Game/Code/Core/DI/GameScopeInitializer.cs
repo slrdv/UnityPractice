@@ -6,28 +6,35 @@ namespace Game
     public sealed class GameScopeInitializer : IInitializable
     {
         private readonly IRepository<string, UnitConfig> _unitRepository;
-        private readonly IGameManager _gameManager;
-        private readonly GameTickService _gameTickService;
         private readonly GameObjectPool<ProjectileView> _projectilePool;
+        private readonly IGameSaveManager _saveManager;
+
+        private readonly IGameSessionManager _sessionManager;
         private readonly HudController _hudManager;
 
-        public GameScopeInitializer(IRepository<string, UnitConfig> unitRepository, IGameManager gameManager, GameTickService gameTickService, GameObjectPool<ProjectileView> projectilePool, HudController hudManager)
+        public GameScopeInitializer(
+            IRepository<string, UnitConfig> unitRepository,
+            GameObjectPool<ProjectileView> projectilePool,
+            IGameSaveManager saveManager,
+            IGameSessionManager sessionManager,
+            GameTickService gameTickService,
+            HudController hudManager)
         {
             _unitRepository = unitRepository;
-            _gameManager = gameManager;
-            _gameTickService = gameTickService;
             _projectilePool = projectilePool;
+            _saveManager = saveManager;
+            _sessionManager = sessionManager;
             _hudManager = hudManager;
         }
         public void Initialize()
         {
             _unitRepository.Load();
             _projectilePool.Prewarm(20);
+            _saveManager.LoadGameData();
 
             _hudManager.Initialize();
 
-            _gameManager.Start();
-            _gameTickService.Start();
+            _sessionManager.InitSession();
 
             Debug.Log("Game scope initialized");
         }

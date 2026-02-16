@@ -17,5 +17,11 @@ namespace Game
         {
             _projectiles.Remove(projectileController);
         }
+
+        public void Clear()
+        {
+            _projectiles.Clear();
+        }
+
     }
 }

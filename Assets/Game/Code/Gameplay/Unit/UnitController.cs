@@ -50,6 +50,7 @@ namespace Game
         {
             _healthSystem.ApplyDamgeEvent -= OnApplyDamage;
             _model.HealthChangedEvent -= HealthChanged;
+            _view.DestroyView();
         }
 
         private void ApplyVelocity(Vector3 velocity)

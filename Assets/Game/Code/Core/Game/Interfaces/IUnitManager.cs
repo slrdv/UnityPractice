@@ -2,6 +2,8 @@ namespace Game
 {
     public interface IUnitManager
     {
-        void SpawnUnits();
+        void SpawnDefaultUnits();
+        void RestoreUnits(UnitModel playerModel, UnitModel enemyModel);
+        void DestroyUnits();
     }
 }

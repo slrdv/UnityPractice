@@ -6,19 +6,25 @@ namespace Game
     {
         private readonly HUDView _hudView;
         private readonly IUnitRegistry _unitRegistry;
+        private readonly IUIInputContext _inputContext;
 
         private StatsController _playerStatsController;
         private StatsController _enemyStatsController;
 
-        public HudController(HUDView hudView, IUnitRegistry unitRegistry)
+        public HudController(HUDView hudView, IUnitRegistry unitRegistry, IUIInputContext inputContext)
         {
             _hudView = hudView;
             _unitRegistry = unitRegistry;
+            _inputContext = inputContext;
 
             unitRegistry.PlayerRegisteredEvent += OnPlayerRegistered;
             unitRegistry.EnemyRegisteredEvent += OnEnemyRegistered;
             unitRegistry.PlayerUnregisteredEvent += OnPlayerUnregistered;
             unitRegistry.EnemyUnregisteredEvent += OnEnemyUnregistered;
+
+            _hudView.SaveButtonPressed += OnSavePressed;
+            _hudView.ResetButtonPressed += OnResetPressed;
+            _hudView.DeleteButtonPressed += OnDeleteSavePressed;
         }
 
         public void Dispose()
@@ -27,6 +33,10 @@ namespace Game
             _unitRegistry.EnemyRegisteredEvent -= OnEnemyRegistered;
             _unitRegistry.PlayerUnregisteredEvent -= OnPlayerUnregistered;
             _unitRegistry.EnemyUnregisteredEvent -= OnEnemyUnregistered;
+
+            _hudView.SaveButtonPressed -= OnSavePressed;
+            _hudView.ResetButtonPressed -= OnResetPressed;
+            _hudView.DeleteButtonPressed -= OnDeleteSavePressed;
 
             _playerStatsController?.Dispose();
             _enemyStatsController?.Dispose();
@@ -43,6 +53,21 @@ namespace Game
             {
                 OnEnemyRegistered(_unitRegistry.Enemy);
             }
+        }
+
+        private void OnSavePressed()
+        {
+            _inputContext.Save();
+        }
+
+        private void OnResetPressed()
+        {
+            _inputContext.Reset();
+        }
+
+        private void OnDeleteSavePressed()
+        {
+            _inputContext.Delete();
         }
 
         private void OnPlayerRegistered(UnitController player)

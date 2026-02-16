@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 
 namespace Game
 {
@@ -16,26 +15,59 @@ namespace Game
             _unitRegistry = unitRegistry;
         }
 
-        public void SpawnUnits()
+        public void SpawnDefaultUnits()
         {
-            UnitController player = _unitSpawner.SpawnDefaultPlayer();
-            UnitController enemy = _unitSpawner.SpawnRandomEnemy();
+            RegisterPlayer(_unitSpawner.SpawnDefaultPlayer());
+            RegisterEnemy(_unitSpawner.SpawnRandomEnemy());
+        }
 
-            _unitRegistry.RegisterPlayer(player);
-            _unitRegistry.RegisterEnemy(enemy);
+        public void RestoreUnits(UnitModel playerModel, UnitModel enemyModel)
+        {
+            RegisterPlayer(_unitSpawner.SpawnPlayer(playerModel));
+            RegisterEnemy(_unitSpawner.SpawnEnemy(enemyModel));
+        }
 
-            _tickRegistry.Register(player);
-            _tickRegistry.Register(enemy);
-
-            Debug.Log("Units spawned");
+        public void DestroyUnits()
+        {
+            DestroyPlayer();
+            DestroyEnemy();
         }
 
         public void Dispose()
         {
+
+        }
+
+        private void RegisterPlayer(UnitController player)
+        {
+            _unitRegistry.RegisterPlayer(player);
+            _tickRegistry.Register(player);
+        }
+
+        private void RegisterEnemy(UnitController enemy)
+        {
+            _unitRegistry.RegisterEnemy(enemy);
+            _tickRegistry.Register(enemy);
+        }
+
+        private void DestroyPlayer()
+        {
+            UnitController unit = _unitRegistry.Player;
+            if (unit == null) return;
+
+            _tickRegistry.Unregister(unit);
             _unitRegistry.UnregisterPlayer();
+            unit.Dispose();
+        }
+
+        private void DestroyEnemy()
+        {
+            UnitController unit = _unitRegistry.Enemy;
+            if (unit == null) return;
+
+            _tickRegistry.Unregister(unit);
             _unitRegistry.UnregisterEnemy();
-            _tickRegistry.Unregister(_unitSpawner.SpawnDefaultPlayer());
-            _tickRegistry.Unregister(_unitSpawner.SpawnRandomEnemy());
+            unit.Dispose();
         }
     }
 }

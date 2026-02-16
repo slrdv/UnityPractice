@@ -14,6 +14,11 @@ namespace Game
         public ProjectileController Create(int damage, float speed, Vector3 position, Vector3 direction, string teamId, Color color)
         {
             ProjectileModel model = new ProjectileModel(damage, position, direction, speed, teamId, color);
+            return Create(model);
+        }
+
+        public ProjectileController Create(ProjectileModel model)
+        {
             return new ProjectileController(model, _pool.Get());
         }
     }

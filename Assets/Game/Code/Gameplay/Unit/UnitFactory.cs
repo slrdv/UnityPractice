@@ -5,10 +5,6 @@ using VContainer.Unity;
 
 namespace Game
 {
-    /// <summary>
-    /// Unit factory
-    /// This factory also have a composition root role
-    /// </summary>
     public sealed class UnitFactory
     {
         private readonly IObjectResolver _resolver;
